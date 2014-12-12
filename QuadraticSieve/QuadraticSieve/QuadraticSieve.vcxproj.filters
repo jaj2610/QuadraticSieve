@@ -19,4 +19,45 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathbig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathdec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathmisc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathobjects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathparser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmaththreads.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathuint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathuint_noasm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathuint_x86.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathuint_x86_64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

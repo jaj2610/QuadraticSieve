@@ -7,8 +7,8 @@
 #include <fstream>
 #include <list>
 #include <math.h>
-#include "BigInteger.h"
-#include "functions.h"
+#include "ttmath-0.9.3\ttmath\ttmath.h"
+
 using namespace std;
 
 int main(int argc, const char * argv[])

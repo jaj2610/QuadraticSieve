@@ -80,6 +80,21 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmath.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathbig.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathdec.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathint.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathmisc.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathobjects.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathparser.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmaththreads.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathtypes.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathuint.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathuint_noasm.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathuint_x86.h" />
+    <ClInclude Include="ttmath-0.9.3\ttmath\ttmathuint_x86_64.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
