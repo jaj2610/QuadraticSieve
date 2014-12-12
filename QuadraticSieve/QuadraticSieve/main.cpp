@@ -12,13 +12,14 @@
 
 using namespace std;
 
-bigInt even = 2;
-
 int main(int argc, const char * argv[])
 {
 	bigInt n = 135291536006657;
-
-	cout << Mod(n, even) << endl;
+	 
+	// test functions
+	// cout << mod(n, 2) << endl;
+	// cout << jacobi(2, n) << endl;
+	// cout << tonelli() << endl;
 
 	return 0;
 }
