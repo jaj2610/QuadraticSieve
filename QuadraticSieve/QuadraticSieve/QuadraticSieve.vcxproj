@@ -78,9 +78,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="functions.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="functions.h" />
     <ClInclude Include="ttmath-0.9.3\ttmath\ttmath.h" />
     <ClInclude Include="ttmath-0.9.3\ttmath\ttmathbig.h" />
     <ClInclude Include="ttmath-0.9.3\ttmath\ttmathdec.h" />

@@ -8,12 +8,13 @@
 #include <list>
 #include <math.h>
 #include "ttmath-0.9.3\ttmath\ttmath.h"
+#include "functions.h"
 
 using namespace std;
 
 int main(int argc, const char * argv[])
 {
-
+	bigInt n = 135291536006657;
 
 	return 0;
 }
