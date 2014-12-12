@@ -27,7 +27,7 @@ bigInt gcd(bigInt a, bigInt b)
 	do
 	{
 		bigInt temp = b;
-		b = a % b;
+		b = Mod(a, b);
 		a = temp;
 	} while (b != 0);
 
@@ -38,6 +38,7 @@ bigInt gcd(bigInt a, bigInt b)
 bigInt exponentiate(bigInt b, bigInt e, bigInt m)
 {
 	bigInt n = 1;
+	bigInt f;
 
 	while (e != 0)
 	{
@@ -45,9 +46,10 @@ bigInt exponentiate(bigInt b, bigInt e, bigInt m)
 		{
 			n = Mod((n * b), m);
 		}
-
-		e = Floor(e / even);
-		b = Mod((b * b), m);
+		f = e.Div(even);
+		e = Floor(f);
+		f = b.Mul(b);
+		b = Mod(f, m);
 	}
 
 	return n;
@@ -56,27 +58,29 @@ bigInt exponentiate(bigInt b, bigInt e, bigInt m)
 // @return jacobi symbol (a/b)
 bigInt jacobi(bigInt a, bigInt b)
 {
-	a = mod(a, b);
+	a = Mod(a, b);
 	bigInt t = 1;
 	bigInt c;
 	bigInt temp;
+	bigInt rule1 = 8;
+	bigInt rule2 = 4;
 
 	while (a != 0) {
 		c = 0;
-		while (a % 2 == 0) {
-			a /= 2;
-			c = bigInt(1) - c; //if c is 1, exponent is odd
+		while (Mod(a, even) == 0) {
+			a = a.Div(even);
+			c = bigInt(1) - c; // if c is 1, exponent is odd
 		}
 		if (c == 1)
-		if (b % 8 == 3 || b % 8 == 5)
+		if (Mod(b, rule1) == 3 || Mod(b, rule1) == 5)
 			t *= -1;
-		if (a % 4 == 3 && b % 4 == 3) {
+		if (Mod(a, rule2) == 3 && Mod(b, rule2) == 3) {
 			t *= -1;
 		}
 		temp = b;
 		b = a;
 		a = temp;
-		a = mod(a, b);
+		a = Mod(a, b);
 	}
 
 	if (b == 1)
@@ -93,12 +97,13 @@ bigInt jacobi(bigInt a, bigInt b)
 tpair tonelli(bigInt a, bigInt p)
 {
 	bigInt b = 0;
-	bigInt t = p - 1;
+	bigInt t = p.Sub(1);
 	bigInt s = 0;
 	bigInt temp;
 	tpair pair;
 	bigInt c;
 	bigInt i = 2;
+	bigInt alg;
 
 	if (jacobi(a, p) == -1)
 	{
@@ -111,22 +116,23 @@ tpair tonelli(bigInt a, bigInt p)
 		temp = 0;
 		while (temp == 1 || temp == 0)
 		{
-			b++;
+			b = b.Add(1);
 			temp = jacobi(b, p);
 		}
 
 		// remove factors of 2
 		while (Mod(t, even) == 0)
 		{
-			t = t / even;
-			s++;
+			t = t.Div(even);
+			s = s.Add(1);
 		}
 
-		c = Mod(a * power(b, even), p);
+		alg = a.Mul(b.Mul(b));
+		c = Mod(alg, p);
 
 		for (bigInt k = 1; k < s; k++)
 		{
-			if (exponentiate(c, power(even, s - k - 1) * t, p) == p - 1)
+			if (exponentiate(c, power(even, (s - k - 1).Mul(t)), p) == p - 1)
 			{
 				i += power(even, k); 
 				c = Mod(c * power(b, power(even, k)), p);
@@ -134,11 +140,11 @@ tpair tonelli(bigInt a, bigInt p)
 		}
 
 		pair.r = Mod(exponentiate(b, (i * t) / even, p) * exponentiate(a, (t + 1) / even, p), p);
-		pair.p_r = p - pair.r;
+		pair.p_r = p.Sub(pair.r);
 
 		while (pair.p_r < 0)
 		{
-			pair.p_r += p;
+			pair.p_r.Add(p);
 		}
 
 		pair.prime = p;

@@ -12,9 +12,13 @@
 
 using namespace std;
 
+bigInt even = 2;
+
 int main(int argc, const char * argv[])
 {
 	bigInt n = 135291536006657;
+
+	cout << Mod(n, even) << endl;
 
 	return 0;
 }
