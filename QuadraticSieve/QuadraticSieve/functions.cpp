@@ -22,116 +22,117 @@ bigInt primes[] = { 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59,
 
 bigInt myNumber = 135291536006657; // given by assignment
 bigInt myNumberSqrt = 11631488; // floor(sqrt(myNumber))... sqrt(myNumber) = 11631488.9849...
-int B = 410; // calculated via formula: 2 * e^(sqrt(logn*log(logn)/4))
-int numOfPrimes = 80; // pi(B), pi(410) = 80
-int M = 7000; // calculated based on B; n^(1/a) = 410, a = 
+int B = 410; // 410: calculated via formula: 2 * e^(sqrt(logn*log(logn)/4))
+int numOfPrimes = 80; // 80: pi(B), pi(410) = 80
+int M = 12440; // calculated based on B; n^(1/a) = 410, a = 
 double Threshold = 1.5; // copied from book methodology
+double logNumber = 32.53845309; // calculated on wolfram alpha, log(135291536006657)
 int factorBaseSize;
-double thresholdDiv = (.5 * log(135291536006657)) + log(M) - (Threshold * log(B));
+double thresholdDiv = (.5 * logNumber) + log(M) - (Threshold * log(B));
 
 // @return a ^ b
 bigInt Pow(bigInt a, bigInt b) 
 {
-	bigInt temp = 1;
-	for (bigInt k = 0; k < b; k++) 
-	{
-		temp *= a;
-	}
-	return temp;
+    bigInt temp = 1;
+    for (bigInt k = 0; k < b; k++) 
+    {
+        temp *= a;
+    }
+    return temp;
 }
 
 // @return gcd(a, b)
 bigInt gcd(bigInt a, bigInt b)
 {
-	while (b != 0)
-	{
-		bigInt temp = b;
-		b = Mod(a, b);
-		a = temp;
-	}
+    while (b != 0)
+    {
+        bigInt temp = b;
+        b = Mod(a, b);
+        a = temp;
+    }
 
-	return Abs(a);
+    return Abs(a);
 }
 
 // @return fast modular exponentiation of b^e mod m
 bigInt fastModExp(bigInt b, bigInt e, bigInt m)
 {
-	bigInt n = 1;
+    bigInt n = 1;
 
-	while (e != 0)
-	{
-		if (Mod(e, even) == 1)
-		{
-			n = Mod((n * b), m);
-		}
-		
-		// e = floor(b/even)
-		if (Mod(e, even) == 0)
-		{
-			e = e / even;
-		}
-		else
-		{
-			e = (e - 1) / even;
-		}
+    while (e != 0)
+    {
+        if (Mod(e, even) == 1)
+        {
+            n = Mod((n * b), m);
+        }
+        
+        // e = floor(b/even)
+        if (Mod(e, even) == 0)
+        {
+            e = e / even;
+        }
+        else
+        {
+            e = (e - 1) / even;
+        }
 
-		b = Mod(b * b, m);
-	}
+        b = Mod(b * b, m);
+    }
 
-	return n;
+    return n;
 }
 
 // ensure modulus doesn't return negative
 // @return a Mod b
 bigInt Mod(bigInt a, bigInt b)
 {
-	bigInt output = a % b;
-	if (output < 0)
-	{
-		output = output + b;
-	}
+    bigInt output = a % b;
+    if (output < 0)
+    {
+        output = output + b;
+    }
 
-	return output;
+    return output;
 }
 
 // @return jacobi symbol (a/b)
 bigInt jacobi(bigInt a, bigInt b)
 {
-	a = Mod(a, b);
-	bigInt t = 1;
+    a = Mod(a, b);
+    bigInt t = 1;
 
-	while (a != 0)
-	{
-		bigInt c = 0;
-		while (Mod(a, even) == 0)
-		{
-			a = a / 2;
-			c = (bigInt)1 - c;
-		}
-		if (c == 1)
-		{
-			if (Mod(b, (bigInt)8) == 3 || (Mod(b, (bigInt)8) == 5))
-			{
-				t = (bigInt)-1 * t;
-			}
-		}
-		if ((Mod(a, (bigInt)4) == 3) && (Mod(b, (bigInt)4) == 3))
-		{
-			t = (bigInt)-1 * t;
-		}
-		bigInt temp = b;
-		b = a;
-		a = temp;
-		a = Mod(a, b);
-	}
-	if (b == 1)
-	{
-		return t;
-	}
-	else
-	{
-		return 0;
-	}
+    while (a != 0)
+    {
+        bigInt c = 0;
+        while (Mod(a, even) == 0)
+        {
+            a = a / 2;
+            c = (bigInt)1 - c;
+        }
+        if (c == 1)
+        {
+            if (Mod(b, (bigInt)8) == 3 || (Mod(b, (bigInt)8) == 5))
+            {
+                t = (bigInt)-1 * t;
+            }
+        }
+        if ((Mod(a, (bigInt)4) == 3) && (Mod(b, (bigInt)4) == 3))
+        {
+            t = (bigInt)-1 * t;
+        }
+        bigInt temp = b;
+        b = a;
+        a = temp;
+        a = Mod(a, b);
+    }
+    if (b == 1)
+    {
+        return t;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 // @param p odd prime
@@ -139,90 +140,90 @@ bigInt jacobi(bigInt a, bigInt b)
 // @return tonelli pair
 tpair tonelli(bigInt p, bigInt a)
 {
-	if (a > (p - 1))
-	{
-		a = Mod(a, p);
-	}
+    if (a > (p - 1))
+    {
+        a = Mod(a, p);
+    }
 
-	if (((jacobi(a, p)) == -1) || ((jacobi(a, p)) == 0))
-	{
-		cout << a << " is a quad residue mod " << p << endl;
-	}
+    if (((jacobi(a, p)) == -1) || ((jacobi(a, p)) == 0))
+    {
+        cout << a << " is a quad residue mod " << p << endl;
+    }
 
-	bigInt b;
-	for (b = 0; b < p; b++)
-	{
-		if ((jacobi(b, p)) == -1)
-		{
-			break;
-		}
-	}
+    bigInt b;
+    for (b = 0; b < p; b++)
+    {
+        if ((jacobi(b, p)) == -1)
+        {
+            break;
+        }
+    }
 
-	bigInt s = 0;
-	bigInt t = p - 1;
-	while (Mod(t, even) == 0)
-	{
-		t = t / even;
-		s = s + 1;
-	}
+    bigInt s = 0;
+    bigInt t = p - 1;
+    while (Mod(t, even) == 0)
+    {
+        t = t / even;
+        s = s + 1;
+    }
 
-	bigInt i = 2;
-	bigInt c = Mod(Mod(a, p) * Mod(b, p) * Mod(b, p), p);
+    bigInt i = 2;
+    bigInt c = Mod(Mod(a, p) * Mod(b, p) * Mod(b, p), p);
 
-	for (bigInt k = 1; k < s; k++)
-	{
-		bigInt e = (bigInt)(t * Pow(even, s - k - 1));
-		if (fastModExp(c, e, p) == -1 || fastModExp(c, e, p) == (p - 1))
-		{
-			i = (i + (bigInt)Pow(even, k));
-			c = Mod(Mod(c, p) * fastModExp(b, (bigInt)Pow(even, k), p), p);
-		}
-	}
+    for (bigInt k = 1; k < s; k++)
+    {
+        bigInt e = (bigInt)(t * Pow(even, s - k - 1));
+        if (fastModExp(c, e, p) == -1 || fastModExp(c, e, p) == (p - 1))
+        {
+            i = (i + (bigInt)Pow(even, k));
+            c = Mod(Mod(c, p) * fastModExp(b, (bigInt)Pow(even, k), p), p);
+        }
+    }
 
-	tpair pair;
-	bigInt temp1 = fastModExp(b, (bigInt)((i * t) / even), p);
-	bigInt temp2 = (bigInt) fastModExp((bigInt)a, (bigInt)((t + 1) / even), (bigInt)p);
-	pair.r = (bigInt)Mod((temp1 * temp2), p);
-	pair.p_r = p - pair.r;
-	pair.prime = p;
+    tpair pair;
+    bigInt temp1 = fastModExp(b, (bigInt)((i * t) / even), p);
+    bigInt temp2 = (bigInt) fastModExp((bigInt)a, (bigInt)((t + 1) / even), (bigInt)p);
+    pair.r = (bigInt)Mod((temp1 * temp2), p);
+    pair.p_r = p - pair.r;
+    pair.prime = p;
 
-	return pair;
+    return pair;
 }
 
 // @return exponent vector
 vector<vector<bigInt>> trialDivision(bigInt n, vector<bigInt> v, int size)
 {
-	bigInt f = n;
-	vector<bigInt> p;
-	vector<bigInt> e;
+    bigInt f = n;
+    vector<bigInt> p;
+    vector<bigInt> e;
 
-	// Init p to be factor base
-	for (int i = 0; i < size; i++)
-	{
-		p.push_back(v[i]);
-		e.push_back(0);
-	}
+    // Init p to be factor base
+    for (int i = 0; i < size; i++)
+    {
+        p.push_back(v[i]);
+        e.push_back(0);
+    }
 
-	if (f < 0)
-	{
-		e[0] = 1;
-		f = Abs(f);
-	}
+    if (f < 0)
+    {
+        e[0] = 1;
+        f = Abs(f);
+    }
 
-	for (int i = 1; i < size; i++)
-	{
-		bigInt d = p[i];
-		while (Mod(f, d) == 0)
-		{
-			f = f / d;
-			e[i] = e[i] + 1;
-		}
-	}
+    for (int i = 1; i < size; i++)
+    {
+        bigInt d = p[i];
+        while (Mod(f, d) == 0)
+        {
+            f = f / d;
+            e[i] = e[i] + 1;
+        }
+    }
 
-	vector<vector<bigInt>> output;
+    vector<vector<bigInt>> output;
 
-	output.push_back(p);
-	output.push_back(e);
-	
-	return output;
+    output.push_back(p);
+    output.push_back(e);
+    
+    return output;
 }

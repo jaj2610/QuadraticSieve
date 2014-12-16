@@ -13,9 +13,9 @@ using namespace std;
 typedef ttmath::Int<2> bigInt;
 
 struct tpair {
-	bigInt r;
-	bigInt p_r;
-	bigInt prime;
+    bigInt r;
+    bigInt p_r;
+    bigInt prime;
 } ;
 
 bigInt Mod(bigInt a, bigInt b);
