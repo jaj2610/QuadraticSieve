@@ -8,6 +8,8 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+using namespace std;
+
 typedef ttmath::Int<2> bigInt;
 
 struct tpair {

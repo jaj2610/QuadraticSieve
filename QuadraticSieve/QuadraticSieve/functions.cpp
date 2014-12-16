@@ -22,9 +22,9 @@ bigInt primes[] = { 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59,
 
 bigInt myNumber = 135291536006657; // given by assignment
 bigInt myNumberSqrt = 11631488; // floor(sqrt(myNumber))... sqrt(myNumber) = 11631488.9849...
-int B = 0; // calculated via formula
-int numOfPrimes = 0; // pi(B)
-int M = 0; // calculated based on B
+int B = 205; // calculated via formula
+int numOfPrimes = 40; // pi(B)
+int M = 6000; // calculated based on B
 double Threshold = 1.5; // copied from book methodology
 int factorBaseSize;
 double thresholdDiv = (.5 * log(135291536006657)) + log(M) - (Threshold * log(B));
@@ -81,6 +81,7 @@ bigInt fastModExp(bigInt b, bigInt e, bigInt m)
 	return n;
 }
 
+// ensure modulus doesn't return negative
 // @return a Mod b
 bigInt Mod(bigInt a, bigInt b)
 {

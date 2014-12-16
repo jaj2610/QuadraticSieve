@@ -56,7 +56,7 @@ int main(int argc, const char * argv[])
 
 	// Tonelli's to solve congruences over the base
 	vector<tpair> solved;
-	for (int i = 0; i < factorBaseSize; i++)
+	for (int i = 0; i < factorBase.size(); i++)
 	{
 		solved.push_back(tonelli(factorBase[i], n));
 	}
@@ -85,7 +85,7 @@ int main(int argc, const char * argv[])
 		{
 			if ((Mod(temp, factorBase[k])) == Mod(solved[k].r, factorBase[k]) || (Mod(temp, factorBase[k])) == Mod(solved[k].p_r, factorBase[k]))
 			{
-				sumLog[i] = sumLog[i] + (int)(.5 + log(factorBase[k]));
+				sumLog[i] = sumLog[i] + (int)(.5 + log(factorBase[k].ToInt()));
 			}
 		}
 		i++;
