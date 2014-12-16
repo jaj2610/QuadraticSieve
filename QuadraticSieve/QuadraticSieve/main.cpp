@@ -15,6 +15,7 @@ using namespace std;
 extern bigInt even;
 extern bigInt primes[];
 extern bigInt myNumber;
+extern long long myNumberLong;
 extern bigInt myNumberSqrt;
 extern int B;
 extern int numOfPrimes;
@@ -47,7 +48,7 @@ int main(int argc, const char * argv[])
 
     // print factor base
     cout << "Factor Base: " << endl;
-    for (int k = 0; k < factorBase.size(); k++)
+    for (unsigned int k = 0; k < factorBase.size(); k++)
     {
         cout << factorBase[k] << " ";
     }
@@ -56,7 +57,7 @@ int main(int argc, const char * argv[])
 
     // Tonelli's to solve congruences over the base
     vector<tpair> solved;
-    for (int i = 0; i < factorBase.size(); i++)
+    for (unsigned int i = 0; i < factorBase.size(); i++)
     {
         tpair pair1 = tonelli(factorBase[i], n);
         solved.push_back(pair1);
@@ -64,7 +65,7 @@ int main(int argc, const char * argv[])
 
     // Print congruences
     cout << "\nTonelli Congruences: " << endl;
-    for (int i = 0; i < solved.size(); i++)
+    for (unsigned int i = 0; i < solved.size(); i++)
     {
         cout << solved[i].prime << ": r = " << solved[i].r << ", p - r = " << solved[i].p_r << endl;
     }
@@ -78,18 +79,18 @@ int main(int argc, const char * argv[])
     }
 
     bigInt temp;
-    int i = 1;
-    while (i < sumLogSize)
+    int o = 1;
+    while (o < sumLogSize)
     {
-        temp = sqrtN - M + i;
-        for (int k = 0; k < factorBase.size(); k++)
+        temp = sqrtN - M + o;
+        for (unsigned int k = 0; k < factorBase.size(); k++)
         {
             if ((Mod(temp, factorBase[k])) == Mod(solved[k].r, factorBase[k]) || (Mod(temp, factorBase[k])) == Mod(solved[k].p_r, factorBase[k]))
             {
-                sumLog[i] = sumLog[i] + (int)(.5 + log(factorBase[k].ToInt()));
+                sumLog[o] = sumLog[o] + (int)(.5 + log(factorBase[k].ToInt()));
             }
         }
-        i++;
+        o++;
     }
 
     // Add -1 and 2 to factor base
@@ -130,9 +131,9 @@ int main(int argc, const char * argv[])
 
     // Gaussian Elim
     // add identity matrix
-    for (int l = 0; l < factor1.size(); l++)
+    for (unsigned int l = 0; l < factor1.size(); l++)
     {
-        for (int k = 0; k < factor1.size(); k++)
+        for (unsigned int k = 0; k < factor1.size(); k++)
         {
             if (l == k)
             {
@@ -148,23 +149,23 @@ int main(int argc, const char * argv[])
     // Perform Elim
     for (int col = 0; col < factorBaseSize; col++)
     {
-        for (int row = 0; row < factorElim.size(); row++)
+        for (unsigned int row = 0; row < factorElim.size(); row++)
         {
             if (factorElim[row].at(col) == 1)
             {
                 vector<bigInt> sum = factorElim[row];
-                for (int row2 = row + 1; row2 < factorElim.size(); row2++)
+                for (unsigned int row2 = row + 1; row2 < factorElim.size(); row2++)
                 {
                     if (factorElim[row2].at(col) == 1)
                     {
                         vector<bigInt> sum2 = factorElim[row2];
                         vector<bigInt> output;
-                        for (int w = 0; w < sum.size(); w++)
+                        for (unsigned int w = 0; w < sum.size(); w++)
                         {
                             output.push_back(Mod((sum2[w] + sum[w]), even));
                         }
                         factorElim[row2].clear();
-                        for (int col2 = 0; col2 < output.size(); col2++)
+                        for (unsigned int col2 = 0; col2 < output.size(); col2++)
                         {
                             factorElim[row2].push_back(output[col2]);
                         }
@@ -179,7 +180,7 @@ int main(int argc, const char * argv[])
     }
 
     // Solve x^2 congruent to y^2 (mod n)
-    for (int i = 0; i < factorElim.size(); i++)
+    for (unsigned int i = 0; i < factorElim.size(); i++)
     {
         bigInt lhs = 1;
         bigInt rhs = 1;
@@ -194,7 +195,7 @@ int main(int argc, const char * argv[])
         }
 
         // Calculate x value by taking product of rows
-        for (int j = factorBaseSize; j < factorElim[0].size(); j++)
+        for (unsigned int j = factorBaseSize; j < factorElim[0].size(); j++)
         {
             if (factorElim[i].at(j) == 1)
             {
@@ -228,10 +229,12 @@ int main(int argc, const char * argv[])
                 rhs = Mod(rhs, n);
             }
 
-            // find gcd(x-y, n)
-            bigInt GCD = gcd(lhs - rhs, n);
+            long long gcdValue = (lhs - rhs).ToInt();
 
-            if ((GCD > 1) && (GCD < n))
+            // find gcd(x-y, n)
+            long long GCD = gcd(gcdValue, myNumberLong);
+
+            if ((GCD > 1) && (GCD < myNumberLong))
             {
                 factored = true;
                 cout << "Factored successfully." << endl;

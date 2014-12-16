@@ -20,7 +20,7 @@ struct tpair {
 
 bigInt Mod(bigInt a, bigInt b);
 bigInt Pow(bigInt a, bigInt b);
-bigInt gcd(bigInt a, bigInt b);
+long long gcd(long long a, long long b);
 bigInt fastModExp(bigInt b, bigInt e, bigInt m);
 bigInt jacobi(bigInt a, bigInt b);
 tpair tonelli(bigInt a, bigInt p);
