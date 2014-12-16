@@ -1,6 +1,6 @@
 // Author: Jacob Jones
 // Class: Cmpsc467 Fall 2014 Penn State - UP
-// Date: 12/12/2014
+// Date: 12/16/2014
 // Description: Implementation of Quadratic Sieve for the 15 digit number: 135291536006657
 
 #include <iostream>
@@ -58,11 +58,12 @@ int main(int argc, const char * argv[])
 	vector<tpair> solved;
 	for (int i = 0; i < factorBase.size(); i++)
 	{
-		solved.push_back(tonelli(factorBase[i], n));
+		tpair pair1 = tonelli(factorBase[i], n);
+		solved.push_back(pair1);
 	}
 
 	// Print congruences
-	cout << "Tonelli Congruences: " << endl;
+	cout << "\nTonelli Congruences: " << endl;
 	for (int i = 0; i < solved.size(); i++)
 	{
 		cout << solved[i].prime << ": r = " << solved[i].r << ", p - r = " << solved[i].p_r << endl;
@@ -108,8 +109,7 @@ int main(int argc, const char * argv[])
 		if (sumLog[k] >= thresholdDiv)
 		{
 			temp = sqrtN - M + k;
-			bigInt temp2 = Pow(temp, 2);
-			bigInt value = temp2 - n;
+			bigInt value = Pow(temp, 2) - n;
 
 			// Run trial division on value, and if it factors add it to factor1
 			trialDiv = trialDivision(value, factorBase, factorBaseSize);
@@ -121,7 +121,7 @@ int main(int argc, const char * argv[])
 				vector<bigInt> modVect;
 				for (int l = 0; l < factorBaseSize; l++)
 				{
-					modVect.push_back(Mod(trialDiv[1][l], even));
+					modVect.push_back(Mod(trialDiv[1].at(l), even));
 				}
 				factorElim.push_back(modVect);
 			}
@@ -150,12 +150,12 @@ int main(int argc, const char * argv[])
 	{
 		for (int row = 0; row < factorElim.size(); row++)
 		{
-			if (factorElim[row][col] == 1)
+			if (factorElim[row].at(col) == 1)
 			{
 				vector<bigInt> sum = factorElim[row];
 				for (int row2 = row + 1; row2 < factorElim.size(); row2++)
 				{
-					if (factorElim[row2][col] == 1)
+					if (factorElim[row2].at(col) == 1)
 					{
 						vector<bigInt> sum2 = factorElim[row2];
 						vector<bigInt> output;
@@ -196,7 +196,7 @@ int main(int argc, const char * argv[])
 		// Calculate x value by taking product of rows
 		for (int j = factorBaseSize; j < factorElim[0].size(); j++)
 		{
-			if (factorElim[i][j] == 1)
+			if (factorElim[i].at(j) == 1)
 			{
 				int pos = j - factorBaseSize;
 				bigInt value = factor1[pos];
@@ -204,7 +204,7 @@ int main(int argc, const char * argv[])
 				lhs = lhs * xValue;
 				lhs = Mod(lhs, n);
 
-				vector<bigInt> tempVect1 = factorElim[pos];
+				vector<bigInt> tempVect1 = factorVector[pos];
 				vector<bigInt> tempVect2;
 				for (int w = 0; w < factorBaseSize; w++)
 				{
@@ -243,7 +243,7 @@ int main(int argc, const char * argv[])
 
 		if (!factored)
 		{
-			cout << "Failed to factor" << endl;
+			cout << "Failed to factor..." << endl;
 		}
 	}
 

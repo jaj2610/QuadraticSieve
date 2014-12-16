@@ -22,9 +22,9 @@ bigInt primes[] = { 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59,
 
 bigInt myNumber = 135291536006657; // given by assignment
 bigInt myNumberSqrt = 11631488; // floor(sqrt(myNumber))... sqrt(myNumber) = 11631488.9849...
-int B = 205; // calculated via formula
-int numOfPrimes = 40; // pi(B)
-int M = 6000; // calculated based on B
+int B = 410; // calculated via formula: 2 * e^(sqrt(logn*log(logn)/4))
+int numOfPrimes = 80; // pi(B), pi(410) = 80
+int M = 7000; // calculated based on B; n^(1/a) = 410, a = 
 double Threshold = 1.5; // copied from book methodology
 int factorBaseSize;
 double thresholdDiv = (.5 * log(135291536006657)) + log(M) - (Threshold * log(B));
@@ -66,13 +66,13 @@ bigInt fastModExp(bigInt b, bigInt e, bigInt m)
 		}
 		
 		// e = floor(b/even)
-		if (Mod(b, even) == 0)
+		if (Mod(e, even) == 0)
 		{
-			e = b / even;
+			e = e / even;
 		}
 		else
 		{
-			e = (b - 1) / even;
+			e = (e - 1) / even;
 		}
 
 		b = Mod(b * b, m);
@@ -184,6 +184,7 @@ tpair tonelli(bigInt p, bigInt a)
 	bigInt temp2 = (bigInt) fastModExp((bigInt)a, (bigInt)((t + 1) / even), (bigInt)p);
 	pair.r = (bigInt)Mod((temp1 * temp2), p);
 	pair.p_r = p - pair.r;
+	pair.prime = p;
 
 	return pair;
 }
@@ -198,8 +199,8 @@ vector<vector<bigInt>> trialDivision(bigInt n, vector<bigInt> v, int size)
 	// Init p to be factor base
 	for (int i = 0; i < size; i++)
 	{
-		p[i] = v[i];
-		e[i] = 0;
+		p.push_back(v[i]);
+		e.push_back(0);
 	}
 
 	if (f < 0)
